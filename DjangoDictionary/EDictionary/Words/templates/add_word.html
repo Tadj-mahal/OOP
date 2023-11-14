@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить слово в словарь</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+    <h1>Добавить слово в словарь</h1>
+
+    <!-- Форма для добавления новых слов -->
+    <form method="post" action="">
+        {% csrf_token %}
+        <label for="foreign_word">Иностранное слово:</label>
+        <input type="text" id="foreign_word" name="foreign_word" required>
+        <label for="translation">Перевод:</label>
+        <input type="text" id="translation" name="translation" required>
+        <button type="submit">Добавить слово</button>
+    </form>
+
+    {% if success %}
+    
+    <ul>
+        <li class="success">{{ success }}</li>
+    </ul>
+
+    {% elif form.errors %}
+    
+    <ul>
+        {% for field, errors in form.errors.items %}
+            <li class="errorlist">{{ field }}: {{ errors.0 }}</li>
+        {% endfor %}
+    </ul>    
+
+    {% endif %}
+    <p><a href="{% url 'words_list' %}" class="button">Просмотреть слова</a></p>
+    <p><a href="{% url 'index' %}" class="button">Вернуться на главную страницу</a></p>
+</body>
+</html>

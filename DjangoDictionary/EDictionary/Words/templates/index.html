@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolyGlotter</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Добро пожаловать в PolyGlotter</h1>
+        <p>Здесь вы можете учить новые иностранные слова и их переводы.</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>О нашем словаре</h2>
+            <p>PolyGlotter - это удобный способ сохранить и изучать новые слова на иностранных языках.</p>
+            <p>Вы можете добавлять новые слова и их переводы, а затем просматривать и изучать их в любое удобное время.</p>
+        </section>
+
+        <section>
+            <h2>Начать изучение</h2>
+            <p>Нажмите кнопку ниже, чтобы начать изучение слов в нашем словаре:</p>
+            <a href="{% url 'add_word' %}" class="button">Добавить слова</a>
+            <a href="{% url 'words_list' %}" class="button">Просмотреть слова</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 PolyGlotter</p>
+    </footer>
+</body>
+</html>

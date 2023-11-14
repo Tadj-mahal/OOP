@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список слов</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+    <style type="text/css">
+        button#download{
+            background-color: #007BFF;
+        }
+    </style>
+    <h1>Список слов</h1>
+    <div id="copytext">
+    <!-- Таблица для отображения слов -->
+    <table>
+        <thead>
+            <tr>
+                <th>Слово</th>
+                <th>Перевод</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for word in words %}
+                <tr>
+                    <td>{{ word.foreign_word }}</td>
+                    <td>{{ word.translation }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">Слова не добавлены</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    <p><a href="{% url 'add_word' %}" class="button">Добавить слова</a></p>
+    <p><a href="{% url 'index' %}" class="button">Вернуться на главную страницу</a></p>
+    <p><button class="button" id="download">Download</button></p>
+    
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        function getRandomInt() {
+            return Math.floor(Math.random() * 99999999);
+        }
+        let download = document.querySelector('#download');
+        download.addEventListener('click', downloadText);
+        function downloadText() {
+            let rows = Array.from(document.querySelectorAll('tbody tr'))
+                .map(row => {
+                    let word = row.querySelector('td:first-child').textContent;
+                    let translation = row.querySelector('td:nth-child(2)').textContent;
+                    return `${word}\t${translation}`;
+                })
+                .join('\n');
+    
+            let el = document.createElement('a');
+            el.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(rows)}`);
+            el.setAttribute('download', 'words-' + getRandomInt() + '.txt');
+            el.style.display = 'none';
+            document.body.appendChild(el);
+            el.click();
+            document.body.removeChild(el);
+        }
+    });
+</script>
+
+</html>
